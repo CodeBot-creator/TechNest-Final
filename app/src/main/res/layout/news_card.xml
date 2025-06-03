@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:layout_height="wrap_content"
+    android:elevation="6dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/newsImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/news2" />
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Certificate course on System Thinking for Data-Driven Agriculture" />
+
+        <TextView
+            android:id="@+id/newsDescription"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modern farming is evolving rapidly, driven by the fusion of data-driven decision-making and systems
+thinking. Technologies like loT sensors and machine learning are revolutionizing agriculture, offering
+opportunities for increased productivity and sustainability. This course explores the synergy between
+data-driven approaches and systems thinking to reshape the future of smart farming." />
+
+        <TextView
+            android:id="@+id/newsDate"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2025/03/21" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
