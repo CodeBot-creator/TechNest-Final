@@ -5,32 +5,38 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class AcademicActivity extends AppCompatActivity {
 
     RecyclerView newsRecyclerView;
     BottomNavigationView bottomNavigationView;
+    FloatingActionButton fab;
     List<NewsItem> newsList = new ArrayList<>();
+    NewsAdapter adapter;
     String loggedInUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // Shared layout
 
         newsRecyclerView = findViewById(R.id.newsRecyclerView);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        fab = findViewById(R.id.fabCreatePost);
+
         loggedInUsername = getIntent().getStringExtra("username");
 
         ImageView infoBtn = findViewById(R.id.infoBtn);
@@ -40,26 +46,26 @@ public class MainActivity extends AppCompatActivity {
         profileBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("username", loggedInUsername);
-            startActivityForResult(intent, 1001);
-        });
-
-        FloatingActionButton fab = findViewById(R.id.fabCreatePost);
-        fab.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CreatePostActivity.class);
-            intent.putExtra("category", "home");
             startActivity(intent);
         });
 
+        adapter = new NewsAdapter(this, newsList);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsRecyclerView.setAdapter(new NewsAdapter(this, newsList));
+        newsRecyclerView.setAdapter(adapter);
 
-        loadNewsFromFirebase("home");
+        loadNewsFromFirebase("academic");
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CreatePostActivity.class);
+            intent.putExtra("category", "academic");
+            startActivity(intent);
+        });
+
+        bottomNavigationView.setSelectedItemId(R.id.nav_academic);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Intent intent;
-            if (item.getItemId() == R.id.nav_academic) {
-                intent = new Intent(this, AcademicActivity.class);
+            if (item.getItemId() == R.id.nav_home) {
+                intent = new Intent(this, MainActivity.class);
             } else if (item.getItemId() == R.id.nav_event) {
                 intent = new Intent(this, EventsActivity.class);
             } else return true;
@@ -85,20 +91,14 @@ public class MainActivity extends AppCompatActivity {
                             String date = data.child("date").getValue(String.class);
                             newsList.add(new NewsItem(title, desc, date));
                         }
-                        newsRecyclerView.getAdapter().notifyDataSetChanged();
+                        adapter.notifyDataSetChanged(); // 🔄 Refresh UI
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        // Optional: log or show a Toast
                     }
                 });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
-            loggedInUsername = data.getStringExtra("updatedUsername");
-        }
-    }
 }

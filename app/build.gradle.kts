@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -40,4 +41,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation ("com.airbnb.android:lottie:6.6.6")
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
+
+
 }
+
+apply(plugin = "com.google.gms.google-services")

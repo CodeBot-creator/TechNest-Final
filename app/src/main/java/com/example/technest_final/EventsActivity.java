@@ -5,19 +5,21 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class EventsActivity extends AppCompatActivity {
 
     RecyclerView newsRecyclerView;
     BottomNavigationView bottomNavigationView;
@@ -40,28 +42,28 @@ public class MainActivity extends AppCompatActivity {
         profileBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("username", loggedInUsername);
-            startActivityForResult(intent, 1001);
+            startActivity(intent);
         });
 
         FloatingActionButton fab = findViewById(R.id.fabCreatePost);
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(this, CreatePostActivity.class);
-            intent.putExtra("category", "home");
+            intent.putExtra("category", "event");
             startActivity(intent);
         });
 
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         newsRecyclerView.setAdapter(new NewsAdapter(this, newsList));
 
-        loadNewsFromFirebase("home");
+        loadNewsFromFirebase("event");
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setSelectedItemId(R.id.nav_event);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Intent intent;
-            if (item.getItemId() == R.id.nav_academic) {
+            if (item.getItemId() == R.id.nav_home) {
+                intent = new Intent(this, MainActivity.class);
+            } else if (item.getItemId() == R.id.nav_academic) {
                 intent = new Intent(this, AcademicActivity.class);
-            } else if (item.getItemId() == R.id.nav_event) {
-                intent = new Intent(this, EventsActivity.class);
             } else return true;
 
             intent.putExtra("username", loggedInUsername);
@@ -89,16 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) { }
                 });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
-            loggedInUsername = data.getStringExtra("updatedUsername");
-        }
     }
 }
