@@ -33,5 +33,19 @@
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCreatePost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="110dp"
+        android:src="@drawable/add"
+        app:layout_anchorGravity="bottom|end"
+        />
+
 
 </RelativeLayout>

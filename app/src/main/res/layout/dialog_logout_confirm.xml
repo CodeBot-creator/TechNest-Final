@@ -2,20 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@drawable/dialog_bg"
     android:orientation="vertical"
     android:padding="24dp"
     android:gravity="center"
-    android:layout_gravity="center"
-    android:layout_margin="24dp"
-    android:elevation="8dp"
-    android:backgroundTint="#FFFFFF">
+    android:elevation="8dp">
 
     <TextView
         android:id="@+id/dialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Really Want to Log Out?"
+        android:text="Really want to log out?"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -35,6 +32,7 @@
             android:layout_weight="1"
             android:layout_height="48dp"
             android:text="Yes"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:backgroundTint="#FF0000"
             android:layout_marginEnd="8dp" />
@@ -45,6 +43,7 @@
             android:layout_weight="1"
             android:layout_height="48dp"
             android:text="No"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:backgroundTint="#0000FF"
             android:layout_marginStart="8dp" />

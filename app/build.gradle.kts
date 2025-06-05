@@ -44,5 +44,12 @@ dependencies {
     implementation ("com.airbnb.android:lottie:6.6.6")
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
+
 
 }
+
+apply(plugin = "com.google.gms.google-services")

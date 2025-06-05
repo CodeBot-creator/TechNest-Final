@@ -54,7 +54,6 @@ public class ProfileActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance("https://technest-final-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("users").child(loggedInUsername);
 
-        Toast.makeText(this, "Welcome " + loggedInUsername, Toast.LENGTH_SHORT).show();
         loadUserProfile();
 
         saveButton.setOnClickListener(v -> updateUserProfile());
@@ -227,7 +226,10 @@ public class ProfileActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
 
-        runnable = dialog::dismiss;
+        runnable = () -> {
+            dialog.dismiss();
+            finish(); // Now close after success dialog
+        };
         handler.postDelayed(runnable, 3000);
     }
 

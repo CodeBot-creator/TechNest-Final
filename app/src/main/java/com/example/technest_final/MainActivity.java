@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,62 +28,75 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         newsRecyclerView = findViewById(R.id.newsRecyclerView);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         loggedInUsername = getIntent().getStringExtra("username");
 
         ImageView infoBtn = findViewById(R.id.infoBtn);
-        infoBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-            startActivity(intent);
-        });
+        infoBtn.setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
 
         ImageView profileBtn = findViewById(R.id.profileBtn);
         profileBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("username", loggedInUsername);
-            startActivityForResult(intent, 1001); // updated for result
+            startActivityForResult(intent, 1001);
         });
 
-        // Dummy News
-        newsList.add(new NewsItem("Get Ready for Interfaculty Championship 2025! 🎯",
-                "The stage is set, the rivalries are heating up...",
-                "2025/03/21", R.drawable.news2));
-
-        newsList.add(new NewsItem("Cricket League Starts Next Week!",
-                "Join us at the stadium for action-packed cricket.",
-                "2025/03/25", R.drawable.news2));
+        FloatingActionButton fab = findViewById(R.id.fabCreatePost);
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CreatePostActivity.class);
+            intent.putExtra("category", "home");
+            startActivity(intent);
+        });
 
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsRecyclerView.setAdapter(new NewsAdapter(newsList));
+        newsRecyclerView.setAdapter(new NewsAdapter(this, newsList));
+
+        loadNewsFromFirebase("home");
 
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_home) {
-                return true;
-            } else if (id == R.id.nav_academic) {
-                Intent intent = new Intent(this, AcademicActivity.class);
-                intent.putExtra("username", loggedInUsername);
-                startActivity(intent);
-                finish();
-                return true;
-            } else if (id == R.id.nav_event) {
-                Intent intent = new Intent(this, EventsActivity.class);
-                intent.putExtra("username", loggedInUsername);
-                startActivity(intent);
-                finish();
-                return true;
-            }
-            return false;
+            Intent intent;
+            if (item.getItemId() == R.id.nav_academic) {
+                intent = new Intent(this, AcademicActivity.class);
+            } else if (item.getItemId() == R.id.nav_event) {
+                intent = new Intent(this, EventsActivity.class);
+            } else return true;
+
+            intent.putExtra("username", loggedInUsername);
+            startActivity(intent);
+            finish();
+            return true;
         });
+    }
+
+    private void loadNewsFromFirebase(String category) {
+        FirebaseDatabase.getInstance("https://technest-final-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference()
+                .child(category)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        newsList.clear();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            String title = data.child("title").getValue(String.class);
+                            String desc = data.child("description").getValue(String.class);
+                            String date = data.child("date").getValue(String.class);
+                            newsList.add(new NewsItem(title, desc, date));
+                        }
+                        newsRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
             loggedInUsername = data.getStringExtra("updatedUsername");
         }
