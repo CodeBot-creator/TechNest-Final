@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "368322995780",
+    "project_id": "technest-final",
+    "storage_bucket": "technest-final.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368322995780:android:298a5ef8da7e77dc57fe11",
+        "android_client_info": {
+          "package_name": "com.example.technest_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDi7QNeSJ5Q-50jDwpQKJRP7gj8GjUZjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,16 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@android:color/white" />
+    <!-- Sets the background color to white -->
+
+    <corners android:radius="16dp" />
+    <!-- Rounds the corners of the rectangle -->
+
+    <padding
+        android:left="16dp"
+        android:top="16dp"
+        android:right="16dp"
+        android:bottom="16dp" />
+    <!-- Adds padding inside the dialog background -->
+</shape>

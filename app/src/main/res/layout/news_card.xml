@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newsCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:elevation="8dp"
+    android:radius="20dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:backgroundTint="#FFFFFF">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FDFDFD">
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#1A237E"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Certificate course on System Thinking for Data-Driven Agriculture" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="#DDDDDD" />
+
+        <TextView
+            android:id="@+id/newsDescription"
+            android:textSize="15sp"
+            android:lineSpacingExtra="6dp"
+            android:textColor="#333333"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modern farming is evolving rapidly..." />
+
+        <TextView
+            android:id="@+id/newsDate"
+            android:textSize="13sp"
+            android:textColor="#757575"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="end"
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Published: 2025/03/21" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
