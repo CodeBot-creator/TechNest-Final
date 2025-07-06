@@ -29,7 +29,6 @@ Users can log in securely and manage news content with full **CRUD (Create, Read
 
 - 🔐 User authentication (sign up, sign in, sign out)  
 - 📰 Real-time news feed with categories (sports, events, academics)  
-- ✍️ Add, edit, and delete news posts (CRUD)  
 - 🔄 Live synchronization of data using Firebase Realtime Database  
 - 📱 Clean and intuitive UI using XML layouts  
 
