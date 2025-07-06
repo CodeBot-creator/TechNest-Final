@@ -1,7 +1,7 @@
 # 📱 TechNest – Faculty News Android App
 
-![Login Screen](assets/login_screen.png)
-![News Feed](assets/news_feed.png)
+![Login Screen](login_screen.png)
+![News Feed](news_feed.png)
 
 
 ## 🧩 Project Overview
